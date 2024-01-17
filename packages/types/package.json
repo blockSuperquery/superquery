@@ -1,0 +1,24 @@
+{
+  "name": "@subql/types-stellar",
+  "version": "3.1.1",
+  "description": "",
+  "homepage": "https://github.com/subquery/subql-stellar",
+  "repository": "github:subquery/subql-stellar",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && tsc -b",
+    "changelog:release": "echo \"Updating changelog $npm_package_version\" && npx chan release $npm_package_version --git-url \"https://github.com/subquery/subql-stellar\" --release-prefix=\"types-stellar/\""
+  },
+  "author": "Ian He",
+  "main": "dist/index.js",
+  "license": "GPL-3.0",
+  "files": [
+    "src/global.d.ts",
+    "/dist"
+  ],
+  "dependencies": {
+    "@subql/types-core": "^0.4.0",
+    "soroban-client": "^1.0.1",
+    "stellar-sdk": "^11.2.0"
+  }
+}
