@@ -10261,7 +10261,7 @@ __metadata:
     "@types/yargs": "npm:^16.0.9"
     "@willsoto/nestjs-prometheus": "npm:^6.0.2"
     async-mutex: "npm:^0.5.0"
-    cron-converter: "npm:^2.0.1"
+    cron-converter: "npm:^2.1.0"
     csv-stringify: "npm:^6.5.1"
     dayjs: "npm:^1.11.12"
     dotenv: "npm:^16.4.5"
@@ -15303,12 +15303,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cron-converter@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "cron-converter@npm:2.0.1"
+"cron-converter@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "cron-converter@npm:2.1.0"
   dependencies:
     luxon: "npm:^3.1.0"
-  checksum: 10/98e17ee80aa9e65c2164f39e9f7b9bbad823eb42d6af0ad97833c350bb208252dcade2cf8ccc03518d0b2bb87505ab4c92ecbacdc7fbc161b453063e8f2b23c4
+  checksum: 10/7807636c403988478ba35bd67f0022dd2d941f6d4273b0d5e24794c6faabe77e6d73220d0153dfdaa1e5cab1d7742becfee7c37ec975cae92db9e22f8ee8dcc7
   languageName: node
   linkType: hard
 
