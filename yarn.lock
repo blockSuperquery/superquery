@@ -10340,7 +10340,7 @@ __metadata:
     graphile-build: "npm:^4.12.2"
     graphile-utils: "npm:^4.13.0"
     graphql: "npm:^15.8.0"
-    graphql-query-complexity: "npm:^0.11.0"
+    graphql-query-complexity: "npm:^1.1.1"
     graphql-ws: "npm:^5.16.0"
     lodash: "npm:^4.17.21"
     nodemon: "npm:^3.1.4"
@@ -18715,14 +18715,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-query-complexity@npm:^0.11.0":
-  version: 0.11.0
-  resolution: "graphql-query-complexity@npm:0.11.0"
+"graphql-query-complexity@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "graphql-query-complexity@npm:1.1.1"
   dependencies:
     lodash.get: "npm:^4.4.2"
   peerDependencies:
-    graphql: ^14.6.0 || ^15.0.0 || ^16.0.0
-  checksum: 10/40635c7b17f10aeb3361febe42b534a01058eed03e16240359411338bdb5e3664ea26e6e09903fcf3ba35b76f03e175197078327dcccea25288385b17c022383
+    graphql: ^15.0.0 || ^16.0.0
+  checksum: 10/251d095db3eb01e01c0da145b55836bd299b435cb37fffc2c1333fc4a122d208e7b5bff302cb787279f3c753491d4ad14bfd88870e0a3ba46d448a178cda8ab1
   languageName: node
   linkType: hard
 

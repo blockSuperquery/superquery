@@ -56,7 +56,7 @@
     "graphile-build": "^4.12.2",
     "graphile-utils": "^4.13.0",
     "graphql": "^15.8.0",
-    "graphql-query-complexity": "^0.11.0",
+    "graphql-query-complexity": "^1.1.1",
     "graphql-ws": "^5.16.0",
     "lodash": "^4.17.21",
     "pg": "^8.12.0",
