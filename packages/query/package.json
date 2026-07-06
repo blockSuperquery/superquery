@@ -77,6 +77,6 @@
     "@types/lodash": "^4.17.20",
     "@types/ws": "^8",
     "@types/yargs": "^16.0.9",
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.14"
   }
 }
