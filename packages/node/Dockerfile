@@ -3,16 +3,19 @@ FROM node:lts-alpine as builder
 # Set working directory
 WORKDIR /app
 
-# Copy all packages
+# Skip husky git-hook installation (no .git in the build context)
+ENV HUSKY=0
+
+# Copy workspace config and sources
+COPY ./package.json ./yarn.lock ./.yarnrc.yml ./tsconfig.json ./
+COPY ./.yarn ./.yarn
 COPY ./packages ./packages
-
-# Copy tsconfig.json
-COPY ./tsconfig.json ./tsconfig.json
-
-# Copy build script
 COPY ./scripts/build.sh ./scripts/build.sh
 
-# Install dependencies and build
+# Install the workspace (shared layer across images)
+RUN yarn install
+
+# Compile this package + its workspace deps, then pack it
 RUN ./scripts/build.sh packages/node
 
 # Production stage

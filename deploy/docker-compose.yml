@@ -51,9 +51,10 @@ services:
       - --unfinalized-blocks=true
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://subquery-node:3000/ready']
-      interval: 3s
+      interval: 5s
       timeout: 5s
-      retries: 10
+      retries: 30
+      start_period: 40s # first boot: connect to chain RPC, create db schema, load project
 
   graphql-engine:
     build:

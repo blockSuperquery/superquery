@@ -13,6 +13,9 @@ if [ ! -d "$PROJECT_DIR" ]; then
   git clone --depth 1 "$STARTER_REPO" "$tmp/starter"
   cp -r "$tmp/starter/$STARTER_PATH" "$PROJECT_DIR"
   rm -rf "$tmp"
+  # The starter's cast breaks against newer @polkadot/types pulled in by a fresh install
+  sed -i 's/(amount as Balance)/(amount as unknown as Balance)/' \
+    "$PROJECT_DIR/src/mappings/mappingHandlers.ts" 2>/dev/null || true
 fi
 
 # Mark the project as standalone so yarn doesn't treat it as part of this monorepo

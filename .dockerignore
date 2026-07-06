@@ -1,5 +1,9 @@
 .github
 node_modules
+**/node_modules
+**/dist
+**/.data
+**/app.tgz
 coverage
 deploy
 docs
