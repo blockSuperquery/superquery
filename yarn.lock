@@ -9983,7 +9983,7 @@ __metadata:
     webpack-merge: "npm:^6.0.1"
     ws: "npm:^8.18.0"
     yaml: "npm:^2.8.1"
-    zod: "npm:^3.25.67"
+    zod: "npm:^4.4.3"
   bin:
     subql: ./bin/run
   languageName: unknown
@@ -29258,10 +29258,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.25.67":
-  version: 3.25.67
-  resolution: "zod@npm:3.25.67"
-  checksum: 10/0e35432dcca7f053e63f5dd491a87c78abe0d981817547252c3b6d05f0f58788695d1a69724759c6501dff3fd62929be24c9f314a3625179bee889150f7a61fa
+"zod@npm:^4.4.3":
+  version: 4.4.3
+  resolution: "zod@npm:4.4.3"
+  checksum: 10/804b9a42aa8f35f2b3c5a8dff906291cb749115f83ee2afe3576d70b5b5c53c965365c7f4967690647a9c54af9838ff232a85ff9577a0a36c44b68bc6cdefe36
   languageName: node
   linkType: hard
 
