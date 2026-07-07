@@ -19,7 +19,7 @@
     "detect-port": "^1.6.1",
     "flatted": "^3.3.3",
     "graphql": "^15.8.0",
-    "graphql-tag": "^2.12.6",
+    "graphql-tag": "^2.12.7",
     "lodash": "^4.17.21",
     "pino": "^6.13.3",
     "rotating-file-stream": "^3.2.3"
