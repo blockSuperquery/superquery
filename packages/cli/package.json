@@ -45,7 +45,7 @@
     "webpack-merge": "^6.0.1",
     "ws": "^8.18.0",
     "yaml": "^2.8.1",
-    "zod": "^3.25.67"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.7",
