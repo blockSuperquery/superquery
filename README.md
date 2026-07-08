@@ -1,6 +1,9 @@
 <div align="center">
 
-# SuperQuery
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/superquery-wordmark-dark.svg">
+  <img alt="SuperQuery" src="docs/assets/superquery-wordmark.svg" width="440">
+</picture>
 
 ### Query at super speed.
 
@@ -113,6 +116,42 @@ the engine core.
 > byte-identical, and proof-of-index merkle roots are used for cross-verification.
 > The milestone plan lives in [`.claude/tasks/`](.claude/tasks/); see the
 > [Development Roadmap](#development-roadmap) below.
+
+## Engineering Progress
+
+A staged, test-first port of the SubQuery engine to Rust. Every milestone is
+gated by **differential tests against the reference implementation** — schema and
+data are asserted byte-identical before a gate is considered passed.
+
+**Foundations**
+
+- [x] Cargo workspace + crate topology (engine · store · config · node/query/cli)
+- [x] Node & database configuration ported 1:1 (`NodeConfig`, `DbConfig`)
+- [x] Core types: `Header`, `IBlock`, `BlockHeightMap`, store operations
+- [x] Engine seams as traits: `BlockchainService`, `ProjectService`, `Store` / `Model` / `StoreModelProvider`, `BlockDispatcher`
+- [x] **Gate 1** — live connectivity verified against real RPC + real Postgres
+
+**Storage** *(in progress)*
+
+- [x] PostgreSQL connection pool + schema-introspection differ
+- [x] Ephemeral-schema integration harness + golden-fixture pipeline (generated from the reference impl)
+- [x] GraphQL schema → entity model + DDL generation
+- [x] **Gate 2 (schema)** — generated schema byte-identical to reference (columns / types / nullability)
+- [x] Direct-DB `PlainModel`: upsert · delete · get · filtered & paginated queries
+- [x] **Gate 2 (data)** — stored rows byte-identical to reference
+- [ ] Metadata model
+- [ ] Write-behind cache (`CachedModel`)
+- [ ] Historical `_block_range` mode
+- [ ] Enums, embedded JSON types, relations / foreign keys
+
+**Indexing pipeline** *(planned)*
+
+- [ ] Fetch service + block-dispatcher spine (**Gate 3**)
+- [ ] Chain integration (Substrate + EVM) — first real end-to-end index (**Gate 4 · MVP**)
+- [ ] Proof-of-index + merkle cross-verification (**Gate 5**)
+- [ ] Rust / WASM mapping execution (**Gate 6**)
+- [ ] Dictionary, reorg / rewind, multi-worker, multi-chain
+- [ ] GraphQL query service, admin / health endpoints, Prometheus metrics
 
 ## Getting Started
 
