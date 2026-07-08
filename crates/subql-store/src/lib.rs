@@ -9,10 +9,12 @@ mod db;
 pub mod ddl;
 mod error;
 pub mod introspect;
+pub mod model;
 pub mod naming;
 pub mod schema;
 
 pub use db::Database;
 pub use error::StoreError;
 pub use introspect::{ColumnInfo, IndexInfo, SchemaInfo, TableInfo};
+pub use model::{CanonicalRow, OrderDir, PlainModel, QueryOptions};
 pub use schema::{parse_entities, EntityField, EntityModel};

@@ -62,6 +62,26 @@ impl Database {
         Ok(())
     }
 
+    /// Execute a parameterized statement, returning the affected row count.
+    pub async fn execute(
+        &self,
+        sql: &str,
+        params: &[&(dyn tokio_postgres::types::ToSql + Sync)],
+    ) -> Result<u64, StoreError> {
+        let client = self.conn().await?;
+        Ok(client.execute(sql, params).await?)
+    }
+
+    /// Run a parameterized query, returning the rows.
+    pub async fn query(
+        &self,
+        sql: &str,
+        params: &[&(dyn tokio_postgres::types::ToSql + Sync)],
+    ) -> Result<Vec<tokio_postgres::Row>, StoreError> {
+        let client = self.conn().await?;
+        Ok(client.query(sql, params).await?)
+    }
+
     /// Introspect `schema` into a canonical, comparison-ready [`SchemaInfo`].
     pub async fn introspect_schema(
         &self,
