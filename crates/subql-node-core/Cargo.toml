@@ -1,0 +1,18 @@
+[package]
+name = "subql-node-core"
+description = "Core chain-agnostic indexing engine (port of @subql/node-core)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+subql-common.workspace = true
+subql-types.workspace = true
+subql-types-core.workspace = true
+subql-utils.workspace = true

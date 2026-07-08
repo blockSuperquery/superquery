@@ -1,0 +1,58 @@
+# SubQuery — Rust workspace
+#
+# This Cargo workspace lives alongside the TypeScript monorepo in `packages/`.
+# We port package-by-package (strangler-fig): a `crates/*` member replaces its
+# `packages/*` counterpart only once it passes the same test vectors. Nothing in
+# `packages/` is deleted until its Rust replacement is proven in production.
+#
+# Dependency edges below mirror the TS package graph:
+#   types-core → types
+#   utils, types-core → common → common-substrate
+#   common, utils, types(-core) → node-core → node
+#   utils, common → query
+#   common, utils → cli
+
+[workspace]
+resolver = "2"
+members = [
+    "crates/subql-utils",
+    "crates/subql-types-core",
+    "crates/subql-types",
+    "crates/subql-common",
+    "crates/subql-common-substrate",
+    "crates/subql-node-core",
+    "crates/subql-node",
+    "crates/subql-query",
+    "crates/subql-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+license = "GPL-3.0"
+authors = ["SubQuery Pte Ltd authors & contributors"]
+repository = "https://github.com/subquery/subql"
+
+# Shared dependency pins. Add real crates here as ports need them; keeping them
+# centralized avoids version drift across the workspace.
+[workspace.dependencies]
+# internal crates (path deps)
+subql-utils = { path = "crates/subql-utils" }
+subql-types-core = { path = "crates/subql-types-core" }
+subql-types = { path = "crates/subql-types" }
+subql-common = { path = "crates/subql-common" }
+subql-common-substrate = { path = "crates/subql-common-substrate" }
+subql-node-core = { path = "crates/subql-node-core" }
+
+# common third-party (unused for now — placeholders compile without them)
+# anyhow = "1"
+# thiserror = "2"
+# serde = { version = "1", features = ["derive"] }
+# tokio = { version = "1", features = ["full"] }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[profile.release]
+lto = "thin"
