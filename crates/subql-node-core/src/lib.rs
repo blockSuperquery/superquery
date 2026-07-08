@@ -1,20 +1,14 @@
 //! Core chain-agnostic indexing engine — Rust port of `@subql/node-core`.
 //!
-//! Port status: **scaffold only**. This is the crux of the migration: block
-//! fetch, reorg handling, the store/DB layer, pipeline orchestration, and the
-//! mapping-execution sandbox. The mapping-execution strategy (embed a JS runtime
-//! vs. IPC to a Node worker vs. Rust/WASM mappings) is still an open decision and
-//! governs the shape of this crate.
+//! Port status: **M0** — establishing seams and foundations. Currently ships a
+//! minimal JSON-RPC height probe ([`rpc`]) used by the `subql-smoke` binary to
+//! prove real chain connectivity at GATE 1. The indexing pipeline (fetch,
+//! dispatch, indexer manager, sandbox) lands across M2–M4.
+//!
+//! The mapping-execution strategy (embedded `deno_core` vs Rust/WASM) is resolved
+//! at M4 — see `.claude/tasks/node-core-rust-port.md` §3.
 
-/// Crate name, used as a placeholder until real exports land.
+pub mod rpc;
+
+/// Crate name, retained as a stable placeholder export.
 pub const CRATE: &str = "subql-node-core";
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn crate_name() {
-        assert_eq!(CRATE, "subql-node-core");
-    }
-}
