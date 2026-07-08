@@ -32,7 +32,11 @@ impl Database {
 
     /// Round-trip check: `SELECT 1`. Proves the pool can reach the server.
     pub async fn ping(&self) -> Result<(), StoreError> {
-        let client = self.pool.get().await.map_err(|e| StoreError::Pool(e.to_string()))?;
+        let client = self
+            .pool
+            .get()
+            .await
+            .map_err(|e| StoreError::Pool(e.to_string()))?;
         client.query_one("SELECT 1", &[]).await?;
         Ok(())
     }
@@ -41,7 +45,11 @@ impl Database {
     /// identifier (it cannot be a bound parameter in DDL).
     pub async fn ensure_schema(&self, schema: &str) -> Result<(), StoreError> {
         validate_ident(schema)?;
-        let client = self.pool.get().await.map_err(|e| StoreError::Pool(e.to_string()))?;
+        let client = self
+            .pool
+            .get()
+            .await
+            .map_err(|e| StoreError::Pool(e.to_string()))?;
         client
             .batch_execute(&format!("CREATE SCHEMA IF NOT EXISTS \"{schema}\""))
             .await?;
@@ -52,7 +60,11 @@ impl Database {
     /// (The real metadata model with its full column set lands in M1.)
     pub async fn ensure_metadata_table(&self, schema: &str) -> Result<(), StoreError> {
         validate_ident(schema)?;
-        let client = self.pool.get().await.map_err(|e| StoreError::Pool(e.to_string()))?;
+        let client = self
+            .pool
+            .get()
+            .await
+            .map_err(|e| StoreError::Pool(e.to_string()))?;
         client
             .batch_execute(&format!(
                 "CREATE TABLE IF NOT EXISTS \"{schema}\".\"_metadata\" \
@@ -63,9 +75,18 @@ impl Database {
     }
 
     /// Upsert a metadata key/value.
-    pub async fn set_metadata(&self, schema: &str, key: &str, value: &str) -> Result<(), StoreError> {
+    pub async fn set_metadata(
+        &self,
+        schema: &str,
+        key: &str,
+        value: &str,
+    ) -> Result<(), StoreError> {
         validate_ident(schema)?;
-        let client = self.pool.get().await.map_err(|e| StoreError::Pool(e.to_string()))?;
+        let client = self
+            .pool
+            .get()
+            .await
+            .map_err(|e| StoreError::Pool(e.to_string()))?;
         client
             .execute(
                 &format!(
@@ -79,9 +100,17 @@ impl Database {
     }
 
     /// Read a metadata value by key.
-    pub async fn get_metadata(&self, schema: &str, key: &str) -> Result<Option<String>, StoreError> {
+    pub async fn get_metadata(
+        &self,
+        schema: &str,
+        key: &str,
+    ) -> Result<Option<String>, StoreError> {
         validate_ident(schema)?;
-        let client = self.pool.get().await.map_err(|e| StoreError::Pool(e.to_string()))?;
+        let client = self
+            .pool
+            .get()
+            .await
+            .map_err(|e| StoreError::Pool(e.to_string()))?;
         let row = client
             .query_opt(
                 &format!("SELECT value FROM \"{schema}\".\"_metadata\" WHERE key = $1"),
@@ -97,9 +126,7 @@ impl Database {
 fn validate_ident(ident: &str) -> Result<(), StoreError> {
     let ok = !ident.is_empty()
         && ident.len() <= 63
-        && ident
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || c == '_');
+        && ident.chars().all(|c| c.is_ascii_alphanumeric() || c == '_');
     if ok {
         Ok(())
     } else {

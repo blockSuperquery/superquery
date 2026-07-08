@@ -121,9 +121,5 @@ pub trait Store: Send + Sync {
 pub trait StoreModelProvider: Send + Sync {
     /// Flush pending changes for `height`. `data_sources_completed` signals no
     /// datasources remain after this height (enables compaction).
-    async fn apply_pending_changes(
-        &self,
-        height: u64,
-        data_sources_completed: bool,
-    ) -> Result<()>;
+    async fn apply_pending_changes(&self, height: u64, data_sources_completed: bool) -> Result<()>;
 }

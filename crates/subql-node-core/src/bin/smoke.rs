@@ -18,7 +18,10 @@ use subql_node_core::rpc::{ChainFamily, JsonRpcClient};
 use subql_store::Database;
 
 #[derive(Parser)]
-#[command(name = "subql-smoke", about = "GATE 1: real RPC + real DB connectivity check")]
+#[command(
+    name = "subql-smoke",
+    about = "GATE 1: real RPC + real DB connectivity check"
+)]
 struct Args {
     /// Chain RPC endpoint (HTTP JSON-RPC).
     #[arg(long, env = "SUBQL_NETWORK_ENDPOINT")]
@@ -55,11 +58,17 @@ async fn main() -> Result<()> {
     );
     let db = Database::connect(&db_cfg).context("build pg pool")?;
     db.ping().await.context("postgres ping (SELECT 1)")?;
-    db.ensure_schema(&args.schema).await.context("create schema")?;
-    db.ensure_metadata_table(&args.schema).await.context("create _metadata")?;
+    db.ensure_schema(&args.schema)
+        .await
+        .context("create schema")?;
+    db.ensure_metadata_table(&args.schema)
+        .await
+        .context("create _metadata")?;
 
     let stamp = run_stamp();
-    db.set_metadata(&args.schema, "smoke_lastRun", &stamp).await.context("write metadata")?;
+    db.set_metadata(&args.schema, "smoke_lastRun", &stamp)
+        .await
+        .context("write metadata")?;
     let read_back = db
         .get_metadata(&args.schema, "smoke_lastRun")
         .await
@@ -68,7 +77,10 @@ async fn main() -> Result<()> {
         read_back.as_deref() == Some(stamp.as_str()),
         "metadata round-trip mismatch: wrote {stamp:?}, read {read_back:?}"
     );
-    println!("[db]  ✓ schema \"{}\" ready, _metadata round-trip OK (smoke_lastRun={stamp})\n", args.schema);
+    println!(
+        "[db]  ✓ schema \"{}\" ready, _metadata round-trip OK (smoke_lastRun={stamp})\n",
+        args.schema
+    );
 
     // --- Check 3: real chain RPC ---
     println!("[rpc] probing {} ({:?})", args.endpoint, family);
@@ -108,6 +120,9 @@ fn load_dotenv() {
 /// A unique-per-run marker value for the metadata round-trip check.
 fn run_stamp() -> String {
     use std::time::{SystemTime, UNIX_EPOCH};
-    let secs = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
+    let secs = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_secs();
     format!("unixtime:{secs}")
 }

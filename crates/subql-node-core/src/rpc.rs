@@ -61,7 +61,11 @@ impl JsonRpcClient {
         }
     }
 
-    async fn call(&self, method: &str, params: serde_json::Value) -> Result<serde_json::Value, RpcError> {
+    async fn call(
+        &self,
+        method: &str,
+        params: serde_json::Value,
+    ) -> Result<serde_json::Value, RpcError> {
         let body = json!({"jsonrpc": "2.0", "id": 1, "method": method, "params": params});
         let resp: serde_json::Value = self
             .http
@@ -79,7 +83,11 @@ impl JsonRpcClient {
             .ok_or_else(|| RpcError::Shape("missing result".into()))
     }
 
-    async fn call_string(&self, method: &str, params: serde_json::Value) -> Result<String, RpcError> {
+    async fn call_string(
+        &self,
+        method: &str,
+        params: serde_json::Value,
+    ) -> Result<String, RpcError> {
         let v = self.call(method, params).await?;
         v.as_str()
             .map(|s| s.to_string())

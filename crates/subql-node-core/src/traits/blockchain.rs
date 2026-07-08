@@ -49,7 +49,10 @@ pub trait BlockchainService: Send + Sync {
     async fn get_header_for_hash(&self, hash: &str) -> Result<Header>;
 
     /// Block timestamp; some chains require an extra request (e.g. Shiden).
-    async fn get_block_timestamp(&self, height: u64) -> Result<Option<chrono::DateTime<chrono::Utc>>>;
+    async fn get_block_timestamp(
+        &self,
+        height: u64,
+    ) -> Result<Option<chrono::DateTime<chrono::Utc>>>;
 
     // --- Block dispatcher ---
 
