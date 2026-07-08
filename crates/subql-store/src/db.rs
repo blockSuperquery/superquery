@@ -32,13 +32,43 @@ impl Database {
 
     /// Round-trip check: `SELECT 1`. Proves the pool can reach the server.
     pub async fn ping(&self) -> Result<(), StoreError> {
-        let client = self
-            .pool
-            .get()
-            .await
-            .map_err(|e| StoreError::Pool(e.to_string()))?;
+        let client = self.conn().await?;
         client.query_one("SELECT 1", &[]).await?;
         Ok(())
+    }
+
+    /// Borrow a pooled client (internal helper).
+    async fn conn(&self) -> Result<deadpool_postgres::Object, StoreError> {
+        self.pool
+            .get()
+            .await
+            .map_err(|e| StoreError::Pool(e.to_string()))
+    }
+
+    /// `DROP SCHEMA ... CASCADE` — used by ephemeral test schemas for teardown.
+    pub async fn drop_schema(&self, schema: &str) -> Result<(), StoreError> {
+        validate_ident(schema)?;
+        let client = self.conn().await?;
+        client
+            .batch_execute(&format!("DROP SCHEMA IF EXISTS \"{schema}\" CASCADE"))
+            .await?;
+        Ok(())
+    }
+
+    /// Run raw SQL (test/setup helper; not for user input).
+    pub async fn batch_execute(&self, sql: &str) -> Result<(), StoreError> {
+        let client = self.conn().await?;
+        client.batch_execute(sql).await?;
+        Ok(())
+    }
+
+    /// Introspect `schema` into a canonical, comparison-ready [`SchemaInfo`].
+    pub async fn introspect_schema(
+        &self,
+        schema: &str,
+    ) -> Result<crate::introspect::SchemaInfo, StoreError> {
+        let client = self.conn().await?;
+        crate::introspect::introspect(&client, schema).await
     }
 
     /// `CREATE SCHEMA IF NOT EXISTS`. Schema name is validated to be a safe

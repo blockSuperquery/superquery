@@ -6,7 +6,13 @@
 //! `_block_range` handling arrive in M1. See `.claude/tasks/node-core-rust-port.md`.
 
 mod db;
+pub mod ddl;
 mod error;
+pub mod introspect;
+pub mod naming;
+pub mod schema;
 
 pub use db::Database;
 pub use error::StoreError;
+pub use introspect::{ColumnInfo, IndexInfo, SchemaInfo, TableInfo};
+pub use schema::{parse_entities, EntityField, EntityModel};

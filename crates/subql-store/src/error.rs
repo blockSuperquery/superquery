@@ -11,4 +11,10 @@ pub enum StoreError {
 
     #[error("invalid schema name: {0}")]
     InvalidSchema(String),
+
+    #[error("failed to parse GraphQL schema: {0}")]
+    Schema(String),
+
+    #[error("unsupported GraphQL type: {0}")]
+    UnsupportedType(String),
 }

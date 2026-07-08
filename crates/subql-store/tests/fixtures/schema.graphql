@@ -1,0 +1,12 @@
+type Transfer @entity {
+  id: ID!
+  amount: BigInt!
+  sender: String!
+  recipient: String
+  blockHeight: Int!
+  value: Float
+  success: Boolean!
+  data: Bytes
+  timestamp: Date!
+  tags: [String!]
+}
