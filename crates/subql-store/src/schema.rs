@@ -58,7 +58,10 @@ pub fn parse_entities(sdl: &str) -> Result<Vec<EntityModel>, StoreError> {
                 }
             })
             .collect();
-        models.push(EntityModel { name: obj.name, fields });
+        models.push(EntityModel {
+            name: obj.name,
+            fields,
+        });
     }
     Ok(models)
 }

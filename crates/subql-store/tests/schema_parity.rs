@@ -52,7 +52,10 @@ async fn try_db() -> Option<Database> {
 
 fn unique_schema() -> String {
     use std::time::{SystemTime, UNIX_EPOCH};
-    let nanos = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos();
+    let nanos = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_nanos();
     format!("subql_parity_{nanos}")
 }
 

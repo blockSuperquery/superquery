@@ -16,8 +16,8 @@ pub fn underscored(input: &str) -> String {
     let acronym = ACRONYM.get_or_init(|| Regex::new(r"([A-Z\d]+)([A-Z][a-z])").unwrap());
     let word = WORD.get_or_init(|| Regex::new(r"([a-z\d])([A-Z])").unwrap());
 
-    let step1 = acronym.replace_all(input, "$1_$2");
-    let step2 = word.replace_all(&step1, "$1_$2");
+    let step1 = acronym.replace_all(input, "${1}_${2}");
+    let step2 = word.replace_all(&step1, "${1}_${2}");
     step2.replace('-', "_").to_lowercase()
 }
 
@@ -31,8 +31,18 @@ pub fn pluralize(word: &str) -> String {
 
     // Uncountable nouns are returned unchanged.
     const UNCOUNTABLE: &[&str] = &[
-        "equipment", "information", "rice", "money", "species", "series", "fish", "sheep", "jeans",
-        "moose", "deer", "news",
+        "equipment",
+        "information",
+        "rice",
+        "money",
+        "species",
+        "series",
+        "fish",
+        "sheep",
+        "jeans",
+        "moose",
+        "deer",
+        "news",
     ];
     if UNCOUNTABLE.contains(&lower.as_str()) {
         return word.to_string();
@@ -52,7 +62,12 @@ pub fn pluralize(word: &str) -> String {
         if lower == *sing {
             // Re-apply the original first-letter case.
             let mut result = plur.to_string();
-            if word.chars().next().map(|c| c.is_uppercase()).unwrap_or(false) {
+            if word
+                .chars()
+                .next()
+                .map(|c| c.is_uppercase())
+                .unwrap_or(false)
+            {
                 result = capitalize_first(&result);
             }
             return result;

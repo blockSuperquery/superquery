@@ -2,13 +2,13 @@
 //!
 //! Reproduces the schema the TS node produces via Sequelize `sync()`. The port
 //! targets, verified against ground-truth fixtures (see `tests/schema_parity.rs`):
-//!   - table name  = `modelToTableName` = `underscored(pluralize(Name))`
-//!   - column name = `underscored(fieldName)`
-//!   - column type = `getColumnOption` + `sequelizeToPostgresTypeMap`
-//!       (arrays → jsonb; ID/String → text; Int → integer; BigInt → numeric;
-//!        Float → double precision; Boolean → boolean; Bytes → bytea;
-//!        Date → timestamp)
-//!   - `id` (type `ID`) is the primary key; non-nullable fields get `NOT NULL`.
+//!
+//! - table name  = `modelToTableName` = `underscored(pluralize(Name))`
+//! - column name = `underscored(fieldName)`
+//! - column type = `getColumnOption` + `sequelizeToPostgresTypeMap`: arrays →
+//!   jsonb; ID/String → text; Int → integer; BigInt → numeric; Float → double
+//!   precision; Boolean → boolean; Bytes → bytea; Date → timestamp.
+//! - `id` (type `ID`) is the primary key; non-nullable fields get `NOT NULL`.
 //!
 //! Comparison is done on the *introspected* result, not this DDL text, so the
 //! exact type keywords here need only resolve to the same Postgres type.
@@ -75,11 +75,15 @@ mod tests {
 
     #[test]
     fn generates_expected_ddl_shape() {
-        let sdl = "type Transfer @entity { id: ID! amount: BigInt! recipient: String tags: [String!] }";
+        let sdl =
+            "type Transfer @entity { id: ID! amount: BigInt! recipient: String tags: [String!] }";
         let models = parse_entities(sdl).unwrap();
         let ddl = create_table(&models[0], "app").unwrap();
 
-        assert!(ddl.starts_with("CREATE TABLE \"app\".\"transfers\" ("), "got: {ddl}");
+        assert!(
+            ddl.starts_with("CREATE TABLE \"app\".\"transfers\" ("),
+            "got: {ddl}"
+        );
         assert!(ddl.contains("\"id\" text NOT NULL"));
         assert!(ddl.contains("\"amount\" numeric NOT NULL"));
         assert!(ddl.contains("\"recipient\" text"));
