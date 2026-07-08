@@ -8,7 +8,12 @@
 //! The mapping-execution strategy (embedded `deno_core` vs Rust/WASM) is resolved
 //! at M4 — see `.claude/tasks/node-core-rust-port.md` §3.
 
+pub mod error;
 pub mod rpc;
+pub mod traits;
+pub mod types;
+
+pub use error::{CoreError, Result};
 
 /// Crate name, retained as a stable placeholder export.
 pub const CRATE: &str = "subql-node-core";
